@@ -20,7 +20,7 @@ where
     P: AsRef<Path>,
 {
     if file_header.is_empty() {
-        file_header = String::from("timestamp,level,route,answer_mode,search_queries,full_answer,question,question_system_notes,answer");
+        file_header = String::from("timestamp;level;route;answer_mode;search_queries;full_answer;question;question_system_notes;answer");
     }
 
     let mut output = OpenOptions::new()
@@ -32,7 +32,7 @@ where
     let h = String::from(file_header + "\n");
     output.write(h.as_bytes())?;
     for content in content_arr {
-        let cntt = String::from(content.to_string() + "\n");
+        let cntt = String::from(content.to_csv_string() + "\n");
         output.write(cntt.as_bytes())?;
     }
     println!("File successfully created/updated!");

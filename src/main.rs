@@ -16,9 +16,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("Example: ./greai_log_reader input.txt output.txt");
         input_file = args[1].as_str();
         output_file = args[2].as_str();
+        println!("Input file: {}", input_file);
+        println!("Output file: {}", output_file);
     } else {
         input_file = args[2].as_str();
         output_file = args[3].as_str();
+        println!("Input file: {}", input_file);
+        println!("Output file: {}", output_file);
     }
 
     let mut content_arr: Vec<ChatLog> = Vec::new();
@@ -41,9 +45,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Chat interactions: {}", (content_arr_size - rag_count));
     println!("RAG interactions: {}", rag_count);
 
-    if args.len() >= 4 {
-        write_content_structure_to_csv(output_file, &content_arr, String::from(""))
-    } else {
-        Ok(())
-    }
+    write_content_structure_to_csv(output_file, &content_arr, String::from(""))?;
+    Ok(())
 }

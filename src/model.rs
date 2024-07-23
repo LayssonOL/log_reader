@@ -52,6 +52,21 @@ pub mod greai {
             )
         }
 
+        pub fn to_csv_string(&self) -> String {
+            format!(
+                "{};{};{};{:?};{};{};{};{};{}",
+                self.timestamp,
+                self.level,
+                self.route,
+                self.answer_mode,
+                self.search_queries,
+                self.full_answer,
+                self.question,
+                self.question_system_notes,
+                self.answer
+            )
+        }
+
         fn split_line<'a>(&self, line: &'a str) -> Vec<&'a str> {
             line.split(" - ").collect::<Vec<&str>>()
         }
@@ -105,7 +120,9 @@ pub mod greai {
         }
 
         pub fn store_full_answer(&mut self, line: &str) {
-            self.full_answer = self.split_line(line)[4].split(": ").collect::<Vec<&str>>()[1]
+            self.full_answer = self.split_line(line)[4]
+                .split("Full response:")
+                .collect::<Vec<&str>>()[1]
                 .trim()
                 .to_string();
         }
